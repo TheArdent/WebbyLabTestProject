@@ -8,14 +8,20 @@
         </div>
     </form>
 </div>
-<? foreach ($actors as $film): ?>
-    <div class="col-md-12 jumbotron">
-        <h3><?= $film['actors']['first_name'] ?> <?= $film['actors']['last_name'] ?></h3>
-        <p><strong>Films:</strong></p>
-		<? foreach ($film['films'] as $item): ?>
-            <p><?= $item['name'] ?>
-                <small>(<?= $item['year'] ?>)</small>
-            </p>
-		<? endforeach; ?>
-    </div>
-<? endforeach; ?>
+<? if (isset($actors)): ?>
+    <? foreach ($actors as $film): ?>
+        <div class="col-md-12 jumbotron">
+            <h3><?= $film['actors']['first_name'] ?> <?= $film['actors']['last_name'] ?></h3>
+            <p><strong>Films:</strong></p>
+            <? foreach ($film['films'] as $item): ?>
+                <p><?= $item['name'] ?>
+                    <small>(<?= $item['year'] ?>)</small>
+                </p>
+            <? endforeach; ?>
+        </div>
+    <? endforeach; ?>
+<? else: ?>
+<div class="com-ld-12 jumbotron">
+    <h3>Actors is empty</h3>
+</div>
+<? endif; ?>

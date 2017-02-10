@@ -20,7 +20,7 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default">Add Film</button>
     <button type="button" class="btn btn-default" onclick="addActor()">Add actor</button>
     <br/><br/>
 

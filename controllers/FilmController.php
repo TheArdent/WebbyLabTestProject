@@ -24,10 +24,10 @@ class FilmController
 		$getActors = function ($film) {
 			$Films = Film::Instance();
 			$film['actors'] = $Films->GetActors($film['film_id']);
-
 			return $film;
 		};
-		$view->films = array_map($getActors, $Films->All($order, $type));
+		if (!empty($Films->All($order, $type)))
+			$view->films = array_map($getActors, $Films->All($order, $type));
 		echo $view->render('Film/all');
 	}
 
@@ -51,6 +51,9 @@ class FilmController
 		$film_id = $Film->Add($_POST['film_name'], $_POST['film_year'], $_POST['film_format']);
 
 		for ($i = 0; $i < count($_POST['first_name']); $i++) {
+			if ($_POST['first_name'][$i] == "" || $_POST['first_name'][$i] == " " || $_POST['last_name'][$i] == "" || $_POST['last_name'][$i] == " ") {
+				continue;
+			}
 			$tmp = $actor->getUserByNames($_POST['first_name'][$i], $_POST['last_name'][$i]);
 			if (!$tmp) {
 				$actor_id = $actor->Add($_POST['first_name'][$i], $_POST['last_name'][$i]);
@@ -141,7 +144,8 @@ class FilmController
 
 			return $film;
 		};
-		$view->films = array_map($getActors, $films);
+		if (!empty($films))
+			$view->films = array_map($getActors, $films);
 
 		$view->title = 'Search film';
 		$view->content = $view->render('Film/all');

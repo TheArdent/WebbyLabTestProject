@@ -9,16 +9,19 @@
         <a href="/Film/Add" class="btn btn-success">Add film</a>
     </form>
 </div>
+<? if (isset($films)) : ?>
 <? foreach ($films as $film): ?>
     <div class="row col-md-12 jumbotron">
         <h3><?= $film['name'] ?></h3>
         <h4>Year:<?= $film['year'] ?></h4>
         <p>
-			<? foreach ($film['actors'] as $actor): ?>
+            <? if (!empty($film['actors'])) : ?>
+                <? foreach ($film['actors'] as $actor): ?>
 
-				<?= $actor['first_name'] ?> <?= $actor['last_name'] ?> <br/>
+                    <?= $actor['first_name'] ?> <?= $actor['last_name'] ?> <br/>
 
-			<? endforeach; ?>
+                <? endforeach; ?>
+            <? endif; ?>
         </p>
         <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal<?= $film['film_id'] ?>">
             Edit
@@ -63,30 +66,29 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button type="button" class="btn btn-default" onclick="addActor()">Add actor</button>
                             <br/><br/>
+                                <? foreach ($film['actors'] as $actor): ?>
+                                    <span class="actors">
+                                    <div class="form-group">
+                                        <label for="actorFirstName">First</label>
+                                        <input type="text" class="form-control" name="first_name[]" id="actorFirstName"
+                                               value="<?= $actor['first_name'] ?>">
+                                    </div>
 
-							<? foreach ($film['actors'] as $actor): ?>
-                                <span class="actors">
-                                <div class="form-group">
-                                    <label for="actorFirstName">First</label>
-                                    <input type="text" class="form-control" name="first_name[]" id="actorFirstName"
-                                           value="<?= $actor['first_name'] ?>">
-                                </div>
+                                    <div class="form-group">
+                                        <label for="actorSecondName">Last name</label>
+                                        <input type="text" class="form-control" name="last_name[]" id="actorSecondName"
+                                               value="<?= $actor['last_name'] ?>">
+                                    </div>
+                                </span>
 
-                                <div class="form-group">
-                                    <label for="actorSecondName">Last name</label>
-                                    <input type="text" class="form-control" name="last_name[]" id="actorSecondName"
-                                           value="<?= $actor['last_name'] ?>">
-                                </div>
-                            </span>
-
-                                <div class="form-group">
-                                    <button class="btn btn-danger" type="button"
-                                            onclick="deleteActor(<?= $film['film_id'] ?>,<?= $actor['actor_id'] ?>)"
-                                            data-dismiss="modal">x
-                                    </button>
-                                </div>
-                                <br/>
-							<? endforeach; ?>
+                                    <div class="form-group">
+                                        <button class="btn btn-danger" type="button"
+                                                onclick="deleteActor(<?= $film['film_id'] ?>,<?= $actor['actor_id'] ?>)"
+                                                data-dismiss="modal">x
+                                        </button>
+                                    </div>
+                                    <br/>
+                                <? endforeach; ?>
 
                         </form>
 
@@ -101,3 +103,8 @@
 
     </div>
 <? endforeach; ?>
+<? else: ?>
+<div class="row col-md-12 jumbotron">
+    <h3> Films is empty</h3>
+</div>
+<? endif; ?>
