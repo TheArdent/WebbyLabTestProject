@@ -22,8 +22,9 @@ class ActorController
 
 			return $film;
 		};
-		if (!empty($Actors->All('actor_id', 'ASC')))
-			$view->actors = array_map($getFilms, $Actors->All('actor_id', 'ASC'));
+		$actors = $Actors->All('actor_id', 'ASC');
+		if (!empty($actors))
+			$view->actors = array_map($getFilms, $actors);
 
 		echo $view->render('Actor/all');
 	}

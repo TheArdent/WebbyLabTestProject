@@ -26,8 +26,9 @@ class FilmController
 			$film['actors'] = $Films->GetActors($film['film_id']);
 			return $film;
 		};
-		if (!empty($Films->All($order, $type)))
-			$view->films = array_map($getActors, $Films->All($order, $type));
+		$films = $Films->All($order, $type);
+		if (!empty($films))
+			$view->films = array_map($getActors, $films);
 		echo $view->render('Film/all');
 	}
 
